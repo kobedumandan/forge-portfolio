@@ -1,0 +1,124 @@
+.app-root {
+  background: #0d000c;
+  color: #efe6dc;
+  font-family: 'Manrope', sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ===== LAYER 1: "THE FORGE" backdrop ===== */
+.app-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.app-backdrop__word {
+  padding: 100px 0;
+  font-family: 'Cinzel', serif;
+  font-weight: 800;
+  font-size: clamp(56px, 17vw, 260px);
+  letter-spacing: 0.04em;
+  line-height: 0.93;
+  white-space: nowrap;
+  text-align: center;
+  color: #efe6dc;
+  text-shadow: 0 0 80px rgba(226, 59, 46, 0.35);
+  user-select: none;
+  transform-origin: center 38%;
+  transform: scale(1);
+  opacity: 0.92;
+  transition: transform 1000ms cubic-bezier(0.7, 0, 0.2, 1),
+    opacity 1000ms ease;
+}
+
+.app-backdrop-text1 {
+  font-size: 16px;
+}
+
+
+.app-backdrop[data-entered='true'] .app-backdrop__word {
+  transform: scale(0.5);
+  opacity: 0;
+}
+
+/* ===== LAYER 2: the 3D forge stage ===== */
+.app-stage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+/* ===== tap-to-enter prompt ===== */
+.app-enter {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 9vh;
+  opacity: 1;
+  transition: opacity 600ms ease;
+}
+
+.app-enter[data-entered='true'] {
+  opacity: 0;
+}
+
+.app-enter__btn {
+  pointer-events: auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #efe6dc;
+}
+
+.app-enter[data-entered='true'] .app-enter__btn {
+  pointer-events: none;
+}
+
+.app-enter__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #efe6dc;
+  animation: glowPulse 2.4s ease-in-out infinite;
+}
+
+.app-enter__line {
+  display: inline-block;
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(180deg, #e23b2e 0%, rgba(226, 59, 46, 0) 100%);
+}
+
+/* ===== LAYER 3: the site itself ===== */
+.app-site {
+  position: relative;
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 800ms ease 200ms;
+}
+
+.app-site[data-entered='true'] {
+  opacity: 1;
+  pointer-events: auto;
+}

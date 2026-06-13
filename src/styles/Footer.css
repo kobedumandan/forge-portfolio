@@ -1,0 +1,56 @@
+﻿.footer {
+  position: relative;
+  z-index: 2;
+  padding: 60px var(--gutter) 40px var(--gutter);
+  border-top: 1px solid rgba(184, 173, 161, 0.12);
+}
+
+.footer__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer__brand-name {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.footer__accent {
+  color: #e23b2e;
+}
+
+.footer__meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #8a7e72;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.footer__status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer__status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff7a2e;
+  box-shadow: 0 0 8px #ff7a2e;
+  animation: glowPulse 2s ease-in-out infinite;
+}

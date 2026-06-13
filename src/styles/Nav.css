@@ -1,0 +1,87 @@
+﻿.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 800ms ease 200ms;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px var(--gutter);
+  background: linear-gradient(
+    180deg,
+    rgba(14, 12, 11, 0.92) 0%,
+    rgba(14, 12, 11, 0.6) 70%,
+    rgba(14, 12, 11, 0) 100%
+  );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.nav[data-entered='true'] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #efe6dc;
+}
+
+/* stacked "THE / FORGE" wordmark, mirroring the intro backdrop */
+.nav__brand-word {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.9;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+}
+
+.nav__brand-the {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  /* nudge so the wider FORGE below stays optically centered */
+  margin-right: -6px;
+  color: #b8ada1;
+}
+
+.nav__brand-forge {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav__link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #b8ada1;
+  text-decoration: none;
+}
+
+.nav__cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #efe6dc;
+  padding: 10px 18px;
+  border: 1px solid #e23b2e;
+  background: rgba(226, 59, 46, 0.08);
+}

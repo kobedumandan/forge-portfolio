@@ -1,0 +1,19 @@
+﻿.divider {
+  position: relative;
+  z-index: 2;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.divider__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(184, 173, 161, 0.25) 50%,
+    transparent 100%
+  );
+}
