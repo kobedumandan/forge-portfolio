@@ -58,7 +58,7 @@ export default function Hero({ stageBoxRef }) {
         </div>
 
         {/* stats / hammer-marks */}
-        <div className="hero__stats">
+        {/* <div className="hero__stats">
           {stats.map((s) => (
             <div key={s.label}>
               <div className="hero__stat-value">
@@ -68,7 +68,7 @@ export default function Hero({ stageBoxRef }) {
               <div className="hero__stat-label">{s.label}</div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       {/* RIGHT: dock target — the fixed 3D forge stage lands here */}

@@ -18,8 +18,18 @@ import '../styles/ForgeCanvas.css';
 // ===========================================================================
 const INTRO_POS = new THREE.Vector3(1.81, 0.18, 0.84); // intro: low eye, looking UP at the anvil
 const INTRO_LOOK = new THREE.Vector3(0, 0.7, 0); // aim at the top of the grounded anvil
-const HERO_POS = new THREE.Vector3(4.5, 3.2, 6.5); // landing: pulled back into the box
-const HERO_LOOK = new THREE.Vector3(0, 0.55, 0);
+const HERO_POS = new THREE.Vector3(1.5, 1.8, 3.5); // landing: pulled back into the box
+const HERO_LOOK = new THREE.Vector3(0, 0.2, 0);
+
+// ===========================================================================
+// FLOOR — the ground disc the anvil sits on.
+//   FLOOR_COLOR  = its color (hex). Change to taste.
+//   FLOOR_RADIUS = how far the disc spreads.
+// The disc fades to transparent toward its rim, so it never blanks out the
+// backdrop text showing through the (transparent) canvas.
+// ===========================================================================
+const FLOOR_COLOR = 0x1a1411;
+const FLOOR_RADIUS = 2.4;
 
 export default function ForgeCanvas({ entered = false }) {
   const mountRef = useRef(null);
@@ -93,11 +103,29 @@ export default function ForgeCanvas({ entered = false }) {
     scene.add(rig);
 
     // ===== GROUND PLATE =====
-    const groundGeo = new THREE.CircleGeometry(3.2, 64);
+    // a soft radial alpha fades the disc to transparent toward its rim, so the
+    // backdrop text behind the (transparent) canvas is never blanked out by a
+    // hard opaque circle. CircleGeometry UVs put the center at (0.5, 0.5), so
+    // a centered radial gradient lines up with the disc exactly.
+    const floorFade = document.createElement('canvas');
+    floorFade.width = floorFade.height = 256;
+    const fctx = floorFade.getContext('2d');
+    const fgrad = fctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+    fgrad.addColorStop(0, 'rgba(255,255,255,1)');
+    fgrad.addColorStop(0.28, 'rgba(255,255,255,1)');
+    fgrad.addColorStop(0.62, 'rgba(255,255,255,0)');
+    fgrad.addColorStop(1, 'rgba(255,255,255,0)');
+    fctx.fillStyle = fgrad;
+    fctx.fillRect(0, 0, 256, 256);
+    const floorAlpha = new THREE.CanvasTexture(floorFade);
+
+    const groundGeo = new THREE.CircleGeometry(FLOOR_RADIUS, 64);
     const groundMat = new THREE.MeshStandardMaterial({
-      color: 0x1a1411,
+      color: FLOOR_COLOR,
       roughness: 0.95,
       metalness: 0.1,
+      transparent: true,
+      alphaMap: floorAlpha,
     });
     const ground = new THREE.Mesh(groundGeo, groundMat);
     ground.rotation.x = -Math.PI / 2;
@@ -105,32 +133,14 @@ export default function ForgeCanvas({ entered = false }) {
     ground.visible = false; // hidden during the intro so it can't cover the text
     rig.add(ground);
 
-    // ===== TREE STUMP BASE (the wooden block) =====
-    const stumpGeo = new THREE.CylinderGeometry(0.85, 0.95, 0.6, 64, 4);
-    const stumpMat = new THREE.MeshStandardMaterial({
-      color: 0x2e1d12,
-      roughness: 0.95,
-      metalness: 0,
-    });
-    const stump = new THREE.Mesh(stumpGeo, stumpMat);
-    stump.position.y = 0.3;
-    stump.castShadow = true;
-    stump.receiveShadow = true;
-    stump.visible = false; // hidden during the intro; shown once docked
-    rig.add(stump);
-
     // ===== ANVIL (loaded from glb/anvil.glb) =====
     // Tunables: where the model sits + how it's oriented. Adjust if the
     // anvil lands off-center, points the wrong way, or sits oddly.
-    const ANVIL_HEIGHT = 0.62; // world height; tops out near y ~1.22
-    const STUMP_TOP_Y = 0.6; // top of the wooden stump — the anvil rests here
+    const ANVIL_HEIGHT = 0.62; // world height
     const ANVIL_ROT_Y = 0; // spin the model so the horn faces +x (radians)
 
-    // the anvil rests on the ground during the intro, then rises onto the
-    // stump as it docks — these are filled in once the model loads
+    // filled in once the model loads
     let anvilObj = null;
-    let anvilRestGround = 0;
-    let anvilRestStump = 0;
 
     // crossfade between the intro "skeleton" (glowing edges) and the docked
     // solid model — these collect the materials we animate each frame
@@ -156,12 +166,9 @@ export default function ForgeCanvas({ entered = false }) {
         box.getCenter(center);
         anvil.position.x -= center.x;
         anvil.position.z -= center.z;
-        anvil.position.y += STUMP_TOP_Y - box.min.y; // base sits on the stump
+        anvil.position.y += -box.min.y; // base rests on the floor (y = 0)
 
         anvilObj = anvil;
-        anvilRestStump = anvil.position.y; // docked: on the pedestal
-        anvilRestGround = anvil.position.y - STUMP_TOP_Y; // intro: on the ground
-        anvil.position.y = anvilRestGround;
 
         const startSolid = enteredRef.current ? 1 : 0;
 
@@ -287,8 +294,7 @@ export default function ForgeCanvas({ entered = false }) {
       rig.rotation.y = rotY;
       rig.rotation.x = rotX * 0.4;
 
-      // the pedestal + floor only exist in the docked (post-intro) forge scene
-      stump.visible = enteredRef.current;
+      // the floor only exists in the docked (post-intro) forge scene
       ground.visible = enteredRef.current;
 
       // dolly the camera between the intro and hero framings
@@ -300,12 +306,8 @@ export default function ForgeCanvas({ entered = false }) {
       camera.position.copy(camPos);
       camera.lookAt(camLook);
 
-      // raise the anvil from the ground onto the stump as it docks
+      // crossfade skeleton (intro) <-> solid (docked).
       if (anvilObj) {
-        const tgtY = enteredRef.current ? anvilRestStump : anvilRestGround;
-        anvilObj.position.y += (tgtY - anvilObj.position.y) * a;
-
-        // crossfade skeleton (intro) <-> solid (docked).
         // intro: edges gently "breathe"; docked: the wireframe fades fully out
         // so the landing shows only the clean solid anvil.
         const solid = enteredRef.current ? 1 : 0;
@@ -355,6 +357,7 @@ export default function ForgeCanvas({ entered = false }) {
           });
         }
       });
+      floorAlpha.dispose();
       renderer.dispose();
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement);

@@ -20,11 +20,21 @@ export default function App() {
   const stageRef = useRef(null); // the fixed 3D stage wrapper
   const boxRef = useRef(null); // hero's right box — the dock target
 
-  // lock scroll while the intro is up
+  // lock scroll while the intro is up. also stop the browser from restoring
+  // the previous scroll position on reload — the intro should always start at
+  // the top, not wherever the user had scrolled to before refreshing.
   useEffect(() => {
+    const prevRestore = window.history.scrollRestoration;
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = prevRestore || "auto";
+      }
     };
   }, []);
 

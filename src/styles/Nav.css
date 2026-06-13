@@ -13,9 +13,9 @@
   padding: 22px var(--gutter);
   background: linear-gradient(
     180deg,
-    rgba(14, 12, 11, 0.92) 0%,
-    rgba(14, 12, 11, 0.6) 70%,
-    rgba(14, 12, 11, 0) 100%
+    rgba(14, 11, 12, 0.92) 0%,
+    rgba(14, 11, 12, 0.6) 70%,
+    rgba(14, 11, 12, 0) 100%
   );
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -67,7 +67,7 @@
 
 .nav__link {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-size: 10px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #b8ada1;
@@ -76,7 +76,7 @@
 
 .nav__cta {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-size: 10px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   text-decoration: none;

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import '../styles/Services.css';
 
 const SERVICES = [
@@ -59,9 +60,32 @@ const SERVICES = [
   },
 ];
 
-function ServiceCard({ service }) {
+function ServiceCard({ service, index }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect(); // reveal once, then stop watching
+        }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="service-card">
+    <div
+      ref={ref}
+      className={`service-card${visible ? ' is-visible' : ''}`}
+      style={{ transitionDelay: `${index * 90}ms` }}
+    >
       <div className="service-card__no">{service.no}</div>
       {service.icon}
       <h3 className="service-card__title">{service.title}</h3>
@@ -93,8 +117,8 @@ export default function Services() {
 
         {/* right service cards */}
         <div className="services__cards">
-          {SERVICES.map((s) => (
-            <ServiceCard key={s.title} service={s} />
+          {SERVICES.map((s, i) => (
+            <ServiceCard key={s.title} service={s} index={i} />
           ))}
         </div>
       </div>
