@@ -6,10 +6,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__row">
         <div className="footer__brand">
-          <img src={logo} alt="" width="28" height="28" className="footer__logo" />
-          <span className="footer__brand-name">
-            kobedu's <span className="footer__accent">Forge</span>
-          </span>
+          The Forge
         </div>
         <div className="footer__meta">© MMXXVI · Forged in the Philippines · Built by hand</div>
         <div className="footer__meta footer__status">
