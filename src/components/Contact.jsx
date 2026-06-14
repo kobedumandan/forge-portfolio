@@ -98,8 +98,7 @@ export default function Contact() {
           ?
         </h2>
         <p className="contact__intro">
-          Drop a brief. I'll reply within two business days with rough scope,
-          timeline, and quote.
+          Drop a brief. I'll reply within two business days with a rough scope.
         </p>
       </div>
 

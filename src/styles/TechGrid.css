@@ -44,7 +44,7 @@
 /* ===== the toolbelt: a continuously scrolling belt of tools ===== */
 .tech-belt {
   position: relative;
-  overflow: hidden;
+  overflow: none;
   /* fade the belt out at both edges so tiles slide in/out softly */
   -webkit-mask-image: linear-gradient(
     90deg,
@@ -88,7 +88,7 @@
   flex: 0 0 auto;
   background: #15110f;
   border: 1px solid rgba(255, 255, 255, 0.04);
-  padding: 14px 22px;
+  padding: 10px 22px;
   border-radius: 10px;
   display: flex;
   flex-direction: row; /* icon and label sit side by side */
@@ -106,13 +106,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 18px;
   line-height: 1;
 }
 
 .tech-tile__name {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: 1px;
   color: #efe6dc;
   text-transform: uppercase;

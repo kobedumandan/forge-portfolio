@@ -160,11 +160,11 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 28px;
+  padding: 12px 24px;
   background: #e23b2e;
   color: #0e0c0b;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   font-weight: 600;

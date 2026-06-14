@@ -55,11 +55,51 @@
   border-top: 1px solid rgba(184, 173, 161, 0.12);
 }
 
+/* ===== scroll reveal: each side eases in from its own edge ===== */
+.project-row__media,
+.project-row__copy {
+  opacity: 0;
+  transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* non-flipped row: media on the left, copy on the right */
+.project-row__media {
+  transform: translateX(-40px);
+}
+.project-row__copy {
+  transform: translateX(40px);
+  transition-delay: 120ms;
+}
+
+/* flipped row: sides swap, so the slide directions swap too */
+.project-row[data-flipped="true"] .project-row__media {
+  transform: translateX(40px);
+}
+.project-row[data-flipped="true"] .project-row__copy {
+  transform: translateX(-40px);
+}
+
+.project-row.is-visible .project-row__media,
+.project-row.is-visible .project-row__copy {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-row__media,
+  .project-row__copy {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .project-row__media {
   position: relative;
   aspect-ratio: 4 / 3;
-  background: var(--proj-bg);
-  border: 1px solid rgba(184, 173, 161, 0.15);
+  background: #15040d;
+  border: 1px solid #5c074446;
+  border-radius: 9px;
   overflow: hidden;
 }
 
@@ -68,6 +108,7 @@
   inset: 0;
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
 }
 
 .project-mock__bar {
@@ -269,6 +310,39 @@
   border-bottom: 1px solid #ff7a2e;
 }
 
-.project-content-row1 {
-  height: fit-content;
+/* two rows split the mock body's height evenly; min-height:0 lets them
+   shrink so the images never push the body taller than it already is */
+.project-content-row1,
+.project-content-row2 {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+/* each image fills its row's height and keeps its own aspect ratio
+   (object-fit: contain = never stretch) */
+.project-content-row1 img,
+.project-content-row2 img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.project-content-row1 img {
+  float: right; /* pic 1 on its own line, pushed to the right */
+  transform: scale(1.09) translateX(-8px) translateY(2px);
+}
+
+.project-content-row2 img {
+  float: left; /* pic 2 on its own line, pushed to the left */
+  transform: scale(1.18) translateX(20px) translateY(-14px);
+}
+
+.project-content-row3 img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 14px;
 }

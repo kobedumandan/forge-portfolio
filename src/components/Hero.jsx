@@ -20,9 +20,9 @@ export default function Hero({ stageBoxRef }) {
         </div> */}
 
         <h1 className="hero__title">
-          Welcome to my
+          Welcome to
           <br />
-          <span className="hero__title-accent">Forge</span>
+          <span className="hero__title-accent"> The Forge</span>
         </h1>
 
         <p className="hero__lead">
@@ -73,11 +73,11 @@ export default function Hero({ stageBoxRef }) {
       <div ref={stageBoxRef} className="hero__stage">
         <div className="hero__label hero__label--tl">
           <span className="hero__label-dot" />
-          FORGE.STATION_01
+          The Forge
         </div>
-        <div className="hero__label hero__label--tr">TEMP // 1450°C</div>
+        <div className="hero__label hero__label--tr">1450°C</div>
         <div className="hero__label hero__label--bl">↻ Drag to rotate</div>
-        <div className="hero__label hero__label--br">ANVIL · No. 001</div>
+        <div className="hero__label hero__label--br">ANVIL.glb</div>
 
         {/* corner ticks */}
         <div aria-hidden="true" className="hero__tick hero__tick--tl" />

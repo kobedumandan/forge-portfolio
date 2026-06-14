@@ -23,7 +23,7 @@ export default function TechGrid() {
         <div className="tech__eyebrow">— 03 / Toolbelt</div>
         <h2 className="tech__title">The tools on the wall.</h2>
         <p className="tech__intro">
-          Every smith has favorites. These are the ones that stay near the anvil.
+          Every smith has favorites. These are the tools I build with.
         </p>
       </div>
 

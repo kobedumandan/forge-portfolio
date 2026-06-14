@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import '../styles/Smith.css';
 
 const FACTS = [
@@ -8,10 +9,34 @@ const FACTS = [
 ];
 
 export default function Smith() {
+  // reveal the section once it scrolls into view (matches the Work/Services pattern)
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect(); // reveal once, then stop watching
+        }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="smith" className="smith">
+    <section
+      id="smith"
+      ref={ref}
+      className={`smith${visible ? ' is-visible' : ''}`}
+    >
       <div className="smith__grid">
-        <div>
+        <div className="smith__copy">
           <div className="smith__eyebrow">— 04 / The Smith</div>
           <h2 className="smith__title">
             Kobe Dumandan,
