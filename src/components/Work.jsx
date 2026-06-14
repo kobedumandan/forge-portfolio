@@ -1,4 +1,6 @@
 import { projects } from "../data/projects";
+import pic1 from "../assets/dnsc-lrms/pic1.png";
+import pic2 from "../assets/dnsc-lrms/pic2.png";
 import "../styles/Work.css";
 
 function ProjectRow({ p }) {
@@ -19,10 +21,10 @@ function ProjectRow({ p }) {
           </div>
           <div className="project-mock__body">
             <div className="project-content-row1">
-              <img src="../assets/dnsc-lrms/pic1.png" alt="" />
+              <img src={pic1} alt="" />
             </div>
             <div className="project-content-row2">
-              <img src="../assets/dnsc-lrms/pic2.png" alt="" />
+              <img src={pic2} alt="" />
             </div>
           </div>
         </div>
