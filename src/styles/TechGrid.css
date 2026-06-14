@@ -41,81 +41,93 @@
   line-height: 1.55;
 }
 
-.tech__grid {
+/* ===== the toolbelt: a continuously scrolling belt of tools ===== */
+.tech-belt {
+  position: relative;
+  overflow: hidden;
+  /* fade the belt out at both edges so tiles slide in/out softly */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+}
+
+.tech-belt__track {
   display: flex;
-  justify-content: space-between;
-  padding: 0 120px;
-  gap: 40px 32px;
+  width: max-content;
+  gap: 16px;
+  /* the track holds two copies of the list, so translating by -50%
+     lands on an identical frame — the loop is seamless */
+  animation: tech-belt-scroll 38s linear infinite;
 }
 
-.tech-rack {
-  flex: 1 1 0; /* every rack shares the row equally, regardless of content */
-  min-width: 0;
-  padding: 0;
+.tech-belt:hover .tech-belt__track {
+  animation-play-state: paused;
 }
 
-.tech-rack__head {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-bottom: 28px;
-}
-
-.tech-rack__idx {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: #8a7e72;
-}
-
-.tech-rack__name {
-  font-family: 'Cinzel', serif;
-  font-size: 22px;
-  font-weight: 600;
-  margin: 4px 0 0 0;
-  color: #efe6dc;
-}
-
-.tech-rack__items {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* exactly 2 equal columns per line */
-  gap: 8px;
-  max-width: 200px; /* keeps the two cards narrow instead of filling the rack */
-  margin: 0 auto; /* center the cards under the category name */
+@keyframes tech-belt-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .tech-tile {
-  min-width: 0;
+  flex: 0 0 auto;
   background: #15110f;
-  padding: 16px 8px;
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 14px 22px;
+  border-radius: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* icon and label sit side by side */
   align-items: center;
-  justify-content: center;
-  gap: 7px;
-  min-height: 68px;
-  transition: background 0.2s;
+  gap: 12px;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .tech-tile:hover {
   background: rgba(226, 59, 46, 0.08);
+  border-color: rgba(226, 59, 46, 0.25);
 }
 
 .tech-tile__icon {
-  width: 32px;
-  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 28px;
+  line-height: 1;
 }
 
 .tech-tile__name {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 1px;
   color: #efe6dc;
   text-transform: uppercase;
-  text-align: center;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-belt__track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+  }
+  .tech-belt {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }

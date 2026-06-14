@@ -1,29 +1,22 @@
-import { techCategories } from '../data/tech';
+import { techStack } from '../data/tech';
 import '../styles/TechGrid.css';
 
-function CategoryRack({ cat }) {
+function Tile({ name, Icon, color }) {
   return (
-    <div className="tech-rack">
-      <div className="tech-rack__head">
-        <div>
-          <div className="tech-rack__idx">{cat.idx}</div>
-          <h3 className="tech-rack__name">{cat.name}</h3>
-        </div>
-      </div>
-
-      <div className="tech-rack__items">
-        {cat.items.map((t) => (
-          <div key={t.name} className="tech-tile">
-            <div className="tech-tile__icon">{t.icon}</div>
-            <div className="tech-tile__name">{t.name}</div>
-          </div>
-        ))}
-      </div>
+    <div className="tech-tile">
+      <span className="tech-tile__icon" style={{ color }}>
+        <Icon />
+      </span>
+      <span className="tech-tile__name">{name}</span>
     </div>
   );
 }
 
 export default function TechGrid() {
+  // Duplicate the list so the belt can loop seamlessly: when the track has
+  // scrolled exactly one copy's width, it resets with no visible jump.
+  const belt = [...techStack, ...techStack];
+
   return (
     <section id="tools" className="tech">
       <div className="tech__head">
@@ -34,10 +27,12 @@ export default function TechGrid() {
         </p>
       </div>
 
-      <div className="tech__grid">
-        {techCategories.map((cat) => (
-          <CategoryRack key={cat.name} cat={cat} />
-        ))}
+      <div className="tech-belt" aria-label="Technology stack">
+        <div className="tech-belt__track">
+          {belt.map((t, i) => (
+            <Tile key={`${t.name}-${i}`} {...t} />
+          ))}
+        </div>
       </div>
     </section>
   );

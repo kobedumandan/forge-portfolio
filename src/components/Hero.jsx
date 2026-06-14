@@ -20,11 +20,9 @@ export default function Hero({ stageBoxRef }) {
         </div> */}
 
         <h1 className="hero__title">
-          Code
+          Welcome to my
           <br />
-          <span className="hero__title-accent">hammered</span>
-          <br />
-          into shape.
+          <span className="hero__title-accent">Forge</span>
         </h1>
 
         <p className="hero__lead">
