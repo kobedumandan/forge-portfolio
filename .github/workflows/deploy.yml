@@ -25,7 +25,11 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm ci
+      # use `npm install` rather than `npm ci`: the lockfile is generated on
+      # Windows, which prunes the Linux-only wasm/native optional deps that the
+      # ubuntu runner resolves (e.g. @emnapi/core via @napi-rs/wasm-runtime).
+      # `npm install` reconciles those at build time instead of hard-failing.
+      - run: npm install --no-audit --no-fund
       - run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
