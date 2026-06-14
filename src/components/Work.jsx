@@ -2,6 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { projects } from "../data/projects";
 import "../styles/Work.css";
 
+// Let Vite bundle the project screenshots and resolve their hashed, base-prefixed
+// URLs at build time. A bare "src/assets/..." string isn't processed by the build
+// and 404s in production (especially under the /forge-portfolio/ base path).
+const projectPics = import.meta.glob("../assets/*/*.png", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+
+function pic(folder, file) {
+  return projectPics[`../assets/${folder}/${file}`];
+}
+
 function ProjectRow({ p, index }) {
   // alternate the layout: even rows put the image left, odd rows put it right
   const flipped = index % 2 === 1;
@@ -52,16 +65,16 @@ function ProjectRow({ p, index }) {
             {p.pics != "1" ? (
               <>
                 <div className="project-content-row1">
-                  <img src={"src/assets/" + p.folder + "/pic1.png"} alt="" />
+                  <img src={pic(p.folder, "pic1.png")} alt="" />
                 </div>
                 <div className="project-content-row2">
-                  <img src={"src/assets/" + p.folder + "/pic2.png"} alt="" />
+                  <img src={pic(p.folder, "pic2.png")} alt="" />
                 </div>
               </>
             ) : (
               <>
                 <div className="project-content-row3">
-                  <img src={"src/assets/" + p.folder + "/pic1.png"} alt="" />
+                  <img src={pic(p.folder, "pic1.png")} alt="" />
                 </div>
               </>
             )}
