@@ -14,10 +14,10 @@ export default function Hero({ stageBoxRef }) {
 
       {/* LEFT: copy */}
       <div className="hero__copy">
-        <div className="hero__badge">
+        {/* <div className="hero__badge">
           <span className="hero__badge-dot" />
-          Forge is hot · accepting commissions
-        </div>
+          Forge is hot
+        </div> */}
 
         <h1 className="hero__title">
           Code
@@ -36,7 +36,7 @@ export default function Hero({ stageBoxRef }) {
 
         <div className="hero__actions">
           <a href="#work" className="hero__btn">
-            See the work
+            See my work
             <svg
               width="16"
               height="16"
@@ -53,7 +53,7 @@ export default function Hero({ stageBoxRef }) {
             </svg>
           </a>
           <a href="#contact" className="hero__btn hero__btn--ghost">
-            Commission a build
+            Commission a project
           </a>
         </div>
 

@@ -9,7 +9,6 @@ function CategoryRack({ cat }) {
           <div className="tech-rack__idx">{cat.idx}</div>
           <h3 className="tech-rack__name">{cat.name}</h3>
         </div>
-        <div className="tech-rack__count">{cat.count}</div>
       </div>
 
       <div className="tech-rack__items">

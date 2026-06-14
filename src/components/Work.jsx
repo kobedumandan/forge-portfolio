@@ -1,13 +1,13 @@
-import { projects } from '../data/projects';
-import '../styles/Work.css';
+import { projects } from "../data/projects";
+import "../styles/Work.css";
 
 function ProjectRow({ p }) {
   return (
-    <div className="project-row" style={{ '--accent': p.accent }}>
+    <div className="project-row" style={{ "--accent": p.accent }}>
       {/* image side */}
       <div
         className="project-row__media"
-        style={{ gridColumn: p.imgCol, '--proj-bg': p.bg }}
+        style={{ gridColumn: p.imgCol, "--proj-bg": p.bg }}
       >
         {/* placeholder browser frame mockup */}
         <div className="project-mock">
@@ -18,21 +18,11 @@ function ProjectRow({ p }) {
             <span className="project-mock__url">{p.url}</span>
           </div>
           <div className="project-mock__body">
-            <div className="project-mock__title">{p.mockTitle}</div>
-            <div className="project-mock__row">
-              <div className="project-mock__row-fill" />
-              <div className="project-mock__row-chip" />
+            <div className="project-content-row1">
+              <img src="../assets/dnsc-lrms/pic1.png" alt="" />
             </div>
-            <div className="project-mock__cards">
-              <div className="project-mock__card" />
-              <div className="project-mock__card" />
-              <div className="project-mock__card" />
-            </div>
-            <div className="project-mock__lineA" />
-            <div className="project-mock__lineB" />
-            <div className="project-mock__actions">
-              <div className="project-mock__btn" />
-              <div className="project-mock__btn project-mock__btn--ghost" />
+            <div className="project-content-row2">
+              <img src="../assets/dnsc-lrms/pic2.png" alt="" />
             </div>
           </div>
         </div>
@@ -57,12 +47,26 @@ function ProjectRow({ p }) {
         </div>
 
         <div className="project-row__links">
-          <a href="#" className="project-row__link project-row__link--primary">
-            Visit live →
-          </a>
-          <a href="#" className="project-row__link">
-            Source code
-          </a>
+          {p.live && (
+            <a
+              href={p.live}
+              target="_blank"
+              rel="noreferrer"
+              className="project-row__link project-row__link--primary"
+            >
+              Visit live →
+            </a>
+          )}
+          {p.repo && (
+            <a
+              href={p.repo}
+              target="_blank"
+              rel="noreferrer"
+              className="project-row__link"
+            >
+              Source code
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -75,12 +79,10 @@ export default function Work() {
       <div className="work__head">
         <div>
           <div className="work__eyebrow">— 02 / The Work</div>
-          <h2 className="work__title">
-            Recent pieces, pulled from the forge.
-          </h2>
+          <h2 className="work__title">Recent pieces, pulled from the forge.</h2>
         </div>
         <div className="work__meta">
-          4 / 12 SHOWN
+          {projects.length} / 12 SHOWN
           <br />
           <a href="#contact" className="work__meta-link">
             request full archive →

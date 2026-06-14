@@ -42,22 +42,23 @@
 }
 
 .tech__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1px;
-  background: rgba(184, 173, 161, 0.12);
-  border: 1px solid rgba(184, 173, 161, 0.15);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 120px;
+  gap: 40px 32px;
 }
 
 .tech-rack {
-  background: #0e0c0b;
-  padding: 40px 32px;
+  flex: 1 1 0; /* every rack shares the row equally, regardless of content */
+  min-width: 0;
+  padding: 0;
 }
 
 .tech-rack__head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   margin-bottom: 28px;
 }
 
@@ -76,34 +77,30 @@
   color: #efe6dc;
 }
 
-.tech-rack__count {
-  font-family: 'Cinzel', serif;
-  font-size: 32px;
-  color: rgba(226, 59, 46, 0.4);
-  font-weight: 700;
-}
-
 .tech-rack__items {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: rgba(184, 173, 161, 0.1);
+  grid-template-columns: 1fr 1fr; /* exactly 2 equal columns per line */
+  gap: 8px;
+  max-width: 200px; /* keeps the two cards narrow instead of filling the rack */
+  margin: 0 auto; /* center the cards under the category name */
 }
 
 .tech-tile {
-  background: #0e0c0b;
-  padding: 18px 14px;
+  min-width: 0;
+  background: #15110f;
+  padding: 16px 8px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-height: 96px;
+  gap: 7px;
+  min-height: 68px;
   transition: background 0.2s;
 }
 
 .tech-tile:hover {
-  background: rgba(226, 59, 46, 0.06);
+  background: rgba(226, 59, 46, 0.08);
 }
 
 .tech-tile__icon {

@@ -268,3 +268,7 @@
   color: #ff7a2e;
   border-bottom: 1px solid #ff7a2e;
 }
+
+.project-content-row1 {
+  height: fit-content;
+}
